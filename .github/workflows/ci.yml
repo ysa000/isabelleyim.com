@@ -1,0 +1,33 @@
+name: CI
+
+# Vercel handles deployment. This workflow only proves the site type-checks,
+# passes its tests, and builds, on every push and pull request.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm check
+
+      - name: Test
+        run: pnpm test --if-present
+
+      - name: Build
+        run: pnpm build

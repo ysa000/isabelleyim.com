@@ -1,0 +1,26 @@
+---
+import { sideProjects } from '../data/resume';
+---
+
+{sideProjects.length > 0 && (
+<section class="section" id="side-projects">
+  <div class="container">
+    <p class="eyebrow">Side projects</p>
+    <h2 class="section-heading">Built on my own time</h2>
+    <div class="edu-grid">
+      {
+        sideProjects.map((p) => (
+          <div class="card">
+            <p class="muted" style="font-family: var(--font-mono); font-size: 0.8rem; margin: 0 0 0.4rem;">{p.years}</p>
+            <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.name}</a> : p.name}</h3>
+            <p style="margin: 0 0 0.75rem;">{p.description}</p>
+            <div class="chip-row">
+              {p.stack.map((s) => <span class="chip">{s}</span>)}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+)}

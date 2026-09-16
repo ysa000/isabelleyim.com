@@ -1,0 +1,31 @@
+---
+import Layout from '../components/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import { site, withBase } from '../data/site';
+import { experience, skillGroups, jobTitle } from '../data/resume';
+
+const current = experience.find((e) => e.current);
+const knowsAbout = skillGroups.flatMap((g) => g.skills).slice(0, 8);
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.author.name,
+  url: site.url,
+  image: `${site.url}${withBase('/img/avatar.jpg')}`,
+  jobTitle: current?.role ?? jobTitle,
+  ...(current && { worksFor: { '@type': 'Organization', name: current.company } }),
+  ...(site.author.email && { email: `mailto:${site.author.email}` }),
+  ...(site.author.location && {
+    address: { '@type': 'PostalAddress', addressLocality: site.author.location },
+  }),
+  sameAs: Object.values(site.socials).map((s) => s.url),
+  ...(knowsAbout.length > 0 && { knowsAbout }),
+};
+---
+
+<Layout title={undefined} jsonLd={personJsonLd}>
+  <Hero />
+  <About />
+</Layout>

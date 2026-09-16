@@ -1,0 +1,35 @@
+---
+/**
+ * Home-page bio. The career facts come from the CV (see resume.ts); the
+ * personal paragraph keeps the wording of the previous isabelleyim.com.
+ */
+import { experience } from '../data/resume';
+
+const link = (company: string) => experience.find((e) => e.company === company)?.companyUrl;
+---
+
+<section class="section" id="about">
+  <div class="container">
+    <p class="eyebrow">About</p>
+    <h2 class="section-heading">A bit of background</h2>
+    <div class="prose about-text">
+      <p>
+        I came to front-end development from the project side. After a few years as a travel
+        consultant and then as a multimedia project manager in a web agency, I retrained as a
+        full-stack JavaScript developer in 2016 and have been building interfaces ever since: the
+        GrandVision optical brands' sites at{' '}
+        {link('Keyrus') ? <a href={link('Keyrus')}>Keyrus</a> : 'Keyrus'}, the listing page at{' '}
+        {link('SeLoger') ? <a href={link('SeLoger')}>SeLoger</a> : 'SeLoger'}, a publishing back-office at{' '}
+        {link('Adilibre') ? <a href={link('Adilibre')}>Adilibre</a> : 'Adilibre'}, and most recently the
+        back-office, B2C site and design system at{' '}
+        {link('Ceetiz') ? <a href={link('Ceetiz')}>Ceetiz</a> : 'Ceetiz'}.
+      </p>
+      <p>
+        Along the way I also brought some changes on a personal level. I needed to slow down 🧘🏻
+        and I wanted to make a difference ✊🏼, so I became vegan 🌱, quit smoking 🚭, took up knitting
+        🧶 and playing the guitar 🙉.
+      </p>
+      <p>If you wish to know more, don't hesitate to connect with me — I'll be happy to chat.</p>
+    </div>
+  </div>
+</section>

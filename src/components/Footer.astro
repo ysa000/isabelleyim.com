@@ -1,0 +1,30 @@
+---
+import { site, withBase } from '../data/site';
+import Icon from './Icon.astro';
+
+// Page links live in the sticky header only; the footer carries socials and the sign-off.
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <ul class="footer-links footer-socials">
+      {Object.values(site.socials).map((s) => (
+        <li>
+          <a
+            href={withBase(s.url)}
+            target={s.url.startsWith('http') ? '_blank' : undefined}
+            rel="noopener"
+            aria-label={s.label}
+            title={s.label}
+          >
+            {s.icon && <Icon name={s.icon} size={20} />}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="footer-sign">
+      {new Date().getFullYear()} <Icon name="peace" size={13} /> {site.author.name}
+      {site.author.location && <> · {site.author.location}</>}
+    </p>
+  </div>
+</footer>

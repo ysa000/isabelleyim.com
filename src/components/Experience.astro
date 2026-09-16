@@ -1,0 +1,75 @@
+---
+import { experience, earlierRoles } from '../data/resume';
+import type { Experience, EarlierRole } from '../data/resume';
+
+/** "Mar 2024 – Present", "2019 – 2021", "2019", or nothing when no dates are supplied. */
+const formatDate = (e: Pick<Experience, 'start' | 'end' | 'current'>) => {
+  if (!e.start && !e.end) return '';
+  const end = e.current ? 'Present' : e.end;
+  return [e.start, end].filter(Boolean).join(' – ');
+};
+
+/** "Apr 2022 – 2026 · Paris": dates, then location, whichever are supplied. */
+const formatMeta = (e: Experience) => [formatDate(e), e.location].filter(Boolean).join(' · ');
+
+const formatEarlier = (r: EarlierRole) => {
+  const where = r.company ? `, ${r.company}` : '';
+  const when = formatDate(r) ? ` (${formatDate(r)})` : '';
+  return `${r.role}${where}${when}`;
+};
+---
+
+<section class="section section-alt" id="experience">
+  <div class="container">
+    <p class="eyebrow">Experience</p>
+    <h2 class="section-heading">Where I've worked</h2>
+
+    <ul class="timeline">
+      {
+        experience.map((e) => (
+          <li class:list={['timeline-item', { current: e.current }]}>
+            <details class="timeline-details">
+              <summary class="timeline-head">
+                <span class="timeline-title-wrap">
+                  <span class="timeline-role">
+                    {e.role}
+                    <span class="timeline-company">
+                      {' · '}
+                      {e.companyUrl ? (
+                        <a href={e.companyUrl} target="_blank" rel="noopener">{e.company}</a>
+                      ) : (
+                        e.company
+                      )}
+                    </span>
+                  </span>
+                  {formatMeta(e) && <span class="timeline-date">{formatMeta(e)}</span>}
+                </span>
+                <span class="timeline-chevron" aria-hidden="true">▸</span>
+              </summary>
+              <div class="timeline-body">
+                {e.summary && <p class="timeline-summary">{e.summary}</p>}
+                {e.bullets && e.bullets.length > 0 && (
+                  <ul class="timeline-bullets">
+                    {e.bullets.map((b) => <li>{b}</li>)}
+                  </ul>
+                )}
+                {e.badges && e.badges.length > 0 && (
+                  <div class="badge-row">
+                    {e.badges.map((b) => <span class="badge">{b}</span>)}
+                  </div>
+                )}
+              </div>
+            </details>
+          </li>
+        ))
+      }
+    </ul>
+
+    {earlierRoles.length > 0 && (
+      <div class="earlier">
+        <strong>Earlier:</strong>
+        {earlierRoles.map((r) => <span>{formatEarlier(r)}</span>)}
+      </div>
+    )}
+  </div>
+</section>

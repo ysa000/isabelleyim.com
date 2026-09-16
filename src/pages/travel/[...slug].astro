@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import TravelIndex from '../../components/travel/TravelIndex.astro';
+import TripStory from '../../components/travel/TripStory.astro';
+import { site } from '../../data/site';
+
+/**
+ * Both /travel (slug undefined) and /travel/<trip> come from this one route so
+ * that a single `getStaticPaths` decides whether the section exists at all.
+ * While `site.features.travel` is off it returns no paths and nothing is built.
+ * (Returning a 404 Response from a plain index page is not enough: the static
+ * build still writes the file.)
+ */
+export async function getStaticPaths() {
+  if (!site.features.travel) return [];
+  const trips = await getCollection('trips');
+  return [
+    { params: { slug: undefined }, props: {} },
+    ...trips.map((trip) => ({ params: { slug: trip.id }, props: { trip } })),
+  ];
+}
+
+interface Props {
+  trip?: CollectionEntry<'trips'>;
+}
+
+const { trip } = Astro.props;
+---
+
+{trip ? <TripStory trip={trip} /> : <TravelIndex />}

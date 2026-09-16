@@ -1,0 +1,29 @@
+---
+import { education } from '../data/resume';
+
+const when = (e: { start: string; end?: string }) => (e.end && e.end !== e.start ? `${e.start} – ${e.end}` : e.start);
+---
+
+{education.length > 0 && (
+<section class="section" id="education">
+  <div class="container">
+    <p class="eyebrow">Education</p>
+    <h2 class="section-heading">Education</h2>
+    <div class="edu-grid">
+      {
+        education.map((e) => (
+          <div class="card">
+            <p class="muted" style="font-family: var(--font-mono); font-size: 0.8rem; margin: 0 0 0.4rem;">
+              {when(e)}
+              {e.note && <> · {e.note}</>}
+            </p>
+            <h3>{e.degree}</h3>
+            {e.field && <p style="margin: 0 0 0.2rem; font-weight: 600; color: var(--text-strong);">{e.field}</p>}
+            <p class="muted" style="margin: 0;">{e.school}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+)}

@@ -1,0 +1,14 @@
+---
+/** The social chips (icon + label) from site.ts. Used in the hero and on /work. */
+import { site, withBase } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<div class="social-row">
+  {Object.values(site.socials).map((s) => (
+    <a class="social-link" href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
+      {s.icon && <Icon name={s.icon} />}
+      {s.label}
+    </a>
+  ))}
+</div>
