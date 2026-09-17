@@ -52,6 +52,9 @@ site rather than guessed; each is marked `TODO(Isabelle)` in the data files.
 - [ ] Keep the X/Twitter link or drop it (`socials.x` in `src/data/site.ts`)
 - [ ] Public email on the site, yes/no (`author.email`; the CV's phone number is never published)
 - [ ] Location string for the footer and `/work` (`author.location`)
+- [ ] `/accessibility` says the site was reviewed with VoiceOver on macOS: run that pass
+      (⌘F5 in Safari, Tab/VO-arrows through both pages) and update the "Last reviewed" date
+      in `src/pages/accessibility.astro` before publishing
 - [x] Experience, education, skills and side projects ported from the CV
 - [x] Palette: old dark/nyanza/cerise colours applied as tokens in `src/styles/global.css`
 

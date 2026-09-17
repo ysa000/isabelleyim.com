@@ -39,10 +39,10 @@ html[data-theme='dark'] {
   --text-strong: #f3ffe1;
   --muted: #a9a4b3;
   --border: #3a3b4a;
-  --accent: #f06aa0;
+  --accent: #f57bab;
   --accent-strong: #ff8fbc;
   --accent-2: #ff8966;
-  --accent-glow: rgba(240, 106, 160, 0.22);
+  --accent-glow: rgba(245, 123, 171, 0.22);
   --on-accent: #1d1e2c;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
@@ -168,6 +168,77 @@ th {
 }
 
 /* ==========================================================================
+   Accessibility: focus, skip link, hidden text, reduced motion
+   ========================================================================== */
+
+/* One visible focus style for every keyboard-focusable element */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Mouse clicks do not paint the ring; the skip-link target never does */
+:focus:not(:focus-visible),
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-color: var(--text-strong);
+}
+
+/* Text for assistive tech only */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Honour the OS "reduce motion" setting: no animations, no movement on hover,
+   instant theme change. The typing effect checks the same setting in JS. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn:hover,
+  .theme-toggle:hover,
+  .social-link:hover,
+  .card:hover,
+  .trip-card:hover {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
    Layout
    ========================================================================== */
 
@@ -257,6 +328,10 @@ th {
 
 .nav-links a[aria-current='page'] {
   color: var(--text-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
 }
 
 /* ==========================================================================
@@ -414,6 +489,22 @@ th {
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
+}
+
+/* Content that only exists on paper (see the print block at the end of this file) */
+.print-only { display: none; }
+
+.work-intro {
+  max-width: 62ch;
+  margin: 0.75rem 0 0;
+}
+
+.work-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.25rem;
+  margin: 1.25rem 0 0.5rem;
 }
 
 .social-link {
@@ -1189,6 +1280,14 @@ body.has-deck .site-footer {
   color: var(--accent);
 }
 
+.footer-meta {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.footer-meta a { color: var(--muted); text-decoration: underline; text-underline-offset: 0.2em; }
+.footer-meta a:hover { color: var(--accent); }
+
 .footer-sign {
   display: inline-flex;
   align-items: center;
@@ -1284,4 +1383,182 @@ body.has-deck .site-footer {
     font-size: 0.9rem;
   }
 
+}
+
+/* ==========================================================================
+   Print — "Print → Save as PDF" on /work gives a clean résumé.
+   Nothing is added for print: only what the page already shows, laid out
+   for paper. The timeline entries are opened by a small script on /work.
+   ========================================================================== */
+
+@page {
+  size: A4;
+  margin: 16mm 14mm;
+}
+
+@media print {
+  :root,
+  html[data-theme='dark'] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #ffffff;
+    --text: #1d1e2c;
+    --text-strong: #000000;
+    --muted: #4a4a55;
+    --border: #c9c9cf;
+    --accent: #a51c59;
+    --accent-strong: #a51c59;
+    --accent-2: #a51c59;
+    --accent-glow: transparent;
+    --on-accent: #ffffff;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    color-scheme: light;
+  }
+
+  html, body {
+    background: #fff;
+    color: var(--text);
+    font-size: 10.5pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body { transition: none; }
+
+  /* Off the paper: header, footer, theme toggle, decorative bits */
+  .site-header,
+  .site-footer,
+  .theme-toggle,
+  .stars,
+  .timeline-chevron,
+  .typed-cursor {
+    display: none !important;
+  }
+
+  .print-only { display: block; }
+
+  /* Home page printed as the résumé: hero becomes the letterhead, the About story stays on screen */
+  .hero { padding: 0; overflow: visible; }
+  .hero-inner { display: block; }
+  .hero-avatar,
+  .hero-greeting,
+  .hero-typed,
+  #about {
+    display: none !important;
+  }
+  .hero h1 { font-size: 22pt; margin-bottom: 0.15em; }
+  .hero h1 .accent { color: var(--text-strong); -webkit-text-fill-color: currentColor; background: none; }
+  .hero-print-title { color: var(--muted); margin: 0 0 0.4rem; }
+  .hero-bio { font-size: inherit; margin: 0.4rem 0 0; max-width: none; }
+  .hero .social-row { margin-bottom: 1rem; }
+
+  .work-intro {
+    max-width: none;
+    margin: 0.4rem 0 0;
+  }
+
+  .work-actions { margin: 0.5rem 0 0; }
+
+  main { padding: 0; }
+
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .section {
+    padding: 0 0 1.1rem;
+  }
+
+  .section-alt {
+    background: transparent;
+    border: 0;
+  }
+
+  h1 { font-size: 22pt; margin-bottom: 0.15em; }
+  h2, .section-heading { font-size: 14pt; margin: 0 0 0.5em; }
+  h3 { font-size: 11pt; }
+
+  .eyebrow { display: none; }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Social chips become a plain line, with their URL so the PDF stays useful */
+  .social-row {
+    display: block;
+    margin: 0.25rem 0 0;
+  }
+
+  .social-link {
+    display: inline;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 9.5pt;
+    color: var(--muted);
+    margin-right: 1.2em;
+    white-space: nowrap;
+  }
+
+  .social-link svg { display: none; }
+
+  .social-link::after {
+    content: ' ' attr(href);
+    color: var(--muted);
+  }
+
+  /* Timeline: every entry open, no hover affordances, no splitting across pages */
+  .timeline-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .timeline-details > summary { cursor: default; }
+
+  .timeline-body { animation: none; }
+
+  .timeline-role { color: var(--text-strong); }
+
+  .timeline-date {
+    color: var(--muted);
+    font-size: 9pt;
+  }
+
+  .timeline-bullets { margin: 0.35rem 0 0.5rem; }
+
+  /* Chips, badges, cards: outlines only */
+  .badge,
+  .chip {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    box-shadow: none;
+    font-size: 8.5pt;
+    padding: 0.05em 0.5em;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid var(--border);
+    padding: 0.75rem 0.9rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .edu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .skill-group + .skill-group { margin-top: 0.6rem; }
+
+  /* Keep a heading with what follows it */
+  h2, h3, .section-heading { break-after: avoid; }
 }

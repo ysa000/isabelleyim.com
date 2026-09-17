@@ -188,6 +188,11 @@ export const sideProjects: SideProject[] = [
 /** Plain job title, used on /work, in meta descriptions and structured data. */
 export const jobTitle = 'Front-end developer';
 
+/** Short pitch from the CV, shown in the hero and at the top of /work (and so in the PDF).
+ *  TODO(Isabelle): keep or drop "Available immediately". */
+export const intro =
+  'Close to eight years building careful, maintainable product interfaces: design systems, reusable components, code review. At home in back-office and consumer-site rebuilds, in TypeScript, Vue 3 / Nuxt and React. Available immediately.';
+
 /** Lines typed out one character at a time in the hero. */
 export const typingRoles = [
   `${jobTitle} 💻`,

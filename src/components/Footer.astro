@@ -22,6 +22,7 @@ import Icon from './Icon.astro';
         </li>
       ))}
     </ul>
+    <p class="footer-meta"><a href={withBase('/accessibility')}>Accessibility</a></p>
     <p class="footer-sign">
       {new Date().getFullYear()} <Icon name="peace" size={13} /> {site.author.name}
       {site.author.location && <> · {site.author.location}</>}

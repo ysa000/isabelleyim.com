@@ -1,0 +1,23 @@
+---
+/**
+ * Printing (⌘P / "Save as PDF") is a quiet feature: the print block in
+ * global.css lays the page out as the résumé. The only thing CSS cannot do is
+ * open a collapsed <details>, so this opens every timeline entry for the print
+ * run and puts back exactly what the reader had open.
+ */
+---
+
+<script>
+  const entries = Array.from(document.querySelectorAll<HTMLDetailsElement>('details.timeline-details'));
+  let openedForPrint: HTMLDetailsElement[] = [];
+
+  window.addEventListener('beforeprint', () => {
+    openedForPrint = entries.filter((d) => !d.open);
+    for (const d of openedForPrint) d.open = true;
+  });
+
+  window.addEventListener('afterprint', () => {
+    for (const d of openedForPrint) d.open = false;
+    openedForPrint = [];
+  });
+</script>

@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'node-html-parser';
 import { site } from '../src/data/site';
-import { experience, earlierRoles, education, sideProjects, skillGroups } from '../src/data/resume';
+import { experience, earlierRoles, education, sideProjects, skillGroups, intro } from '../src/data/resume';
 
 const root = new URL('..', import.meta.url).pathname;
 const dist = join(root, 'dist');
@@ -150,6 +150,87 @@ describe('stylesheet', () => {
       const css = readFileSync(join(cssDir, f), 'utf8');
       expect((css.match(/\{/g) ?? []).length, f).toBe((css.match(/\}/g) ?? []).length);
     }
+  });
+});
+
+describe('print stylesheet for /work', () => {
+  it('ships print rules that hide the chrome and opens the timeline for printing', () => {
+    const css = readdirSync(join(dist, '_astro'))
+      .filter((f) => f.endsWith('.css'))
+      .map((f) => readFileSync(join(dist, '_astro', f), 'utf8'))
+      .join('\n');
+    const printBlock = css.slice(css.indexOf('@media print'));
+    expect(printBlock.length).toBeGreaterThan(0);
+    expect(printBlock).toMatch(/\.site-header[^{]*\{[^}]*display:\s*none/);
+    expect(css).toContain('@page');
+
+    const work = read(dist, 'work/index.html');
+    expect(work).toContain('beforeprint');
+    expect(work).toContain('afterprint');
+  });
+
+  it('shows the same intro on both pages and offers no print button (printing is a quiet feature)', () => {
+    const work = parse(read(dist, 'work/index.html'));
+    expect(work.querySelector('.work-intro')?.text.trim()).toBe(intro);
+    const home = parse(read(dist, 'index.html'));
+    expect(home.querySelector('.hero-bio')?.text.trim()).toBe(intro);
+    expect(home.querySelector('.save-pdf')).toBeNull();
+    expect(work.querySelector('.save-pdf')).toBeNull();
+    expect(read(dist, 'index.html')).toContain('beforeprint');
+  });
+
+  it('home page carries the résumé for paper only, hidden from screen and assistive tech', () => {
+    const home = parse(read(dist, 'index.html'));
+    const paper = home.querySelector('.print-only[aria-hidden="true"]');
+    expect(paper).not.toBeNull();
+    for (const e of experience) expect(paper?.text).toContain(e.company);
+    expect(paper?.text).toContain(education[0]!.school);
+    expect(paper?.text).toContain(sideProjects[0]!.name);
+    const css = readdirSync(join(dist, '_astro'))
+      .filter((f) => f.endsWith('.css'))
+      .map((f) => readFileSync(join(dist, '_astro', f), 'utf8'))
+      .join('\n');
+    expect(css).toMatch(/\.print-only\{display:none\}/);
+  });
+});
+
+describe('accessibility', () => {
+  const home = page(dist, 'index.html');
+
+  it('starts with a skip link that targets the main landmark', () => {
+    const first = home.querySelector('body a');
+    expect(first?.classNames).toContain('skip-link');
+    expect(first?.getAttribute('href')).toBe('#main');
+    expect(home.querySelector('main#main')?.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('theme toggle is a real button with an action label', () => {
+    const btn = home.querySelector('button#theme-toggle');
+    expect(btn?.getAttribute('type')).toBe('button');
+    expect(btn?.getAttribute('aria-label')).toMatch(/^Switch to (dark|light) theme$/);
+  });
+
+  it('hides the animated hero line from assistive tech and provides a static alternative', () => {
+    expect(home.querySelector('#typed-roles')?.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(home.querySelector('.hero-typed .visually-hidden')?.text).toContain('Front-end developer');
+  });
+
+  it('ships focus-visible and reduced-motion rules', () => {
+    const css = readdirSync(join(dist, '_astro'))
+      .filter((f) => f.endsWith('.css'))
+      .map((f) => readFileSync(join(dist, '_astro', f), 'utf8'))
+      .join('\n');
+    expect(css).toContain(':focus-visible{outline:3px solid');
+    expect(css).toContain('prefers-reduced-motion:reduce');
+  });
+
+  it('publishes an accessibility statement linked from the footer', () => {
+    const doc = page(dist, 'accessibility/index.html');
+    expect(doc.querySelector('title')?.text).toBe('Accessibility · isabelleyim');
+    expect(doc.querySelectorAll('h1').length).toBe(1);
+    expect(doc.text).toContain('WCAG');
+    expect(doc.text).toContain('2.2');
+    expect(home.querySelector('footer a[href="/accessibility"]')).not.toBeNull();
   });
 });
 

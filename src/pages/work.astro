@@ -6,7 +6,7 @@ import Skills from '../components/Skills.astro';
 import SideProjects from '../components/SideProjects.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { site } from '../data/site';
-import { experience, jobTitle } from '../data/resume';
+import { experience, jobTitle, intro } from '../data/resume';
 
 const current = experience.find((e) => e.current);
 const description = current
@@ -23,7 +23,8 @@ const description = current
         {current ? `${current.role} · ${current.company}` : jobTitle}
       </p>
       {site.author.location && <p class="muted" style="margin: 0 0 0.25rem;">{site.author.location}</p>}
-      <div style="margin: 1rem 0 0.5rem;">
+      <p class="work-intro">{intro}</p>
+      <div class="work-actions">
         <SocialLinks />
       </div>
     </div>

@@ -1,0 +1,83 @@
+---
+import Layout from '../components/Layout.astro';
+import { site } from '../data/site';
+
+/** Date of the last review recorded on this page. Update it whenever the checks are redone. */
+const lastReviewed = '2026-09-17';
+const contact = [site.socials.linkedin, site.socials.github];
+---
+
+<Layout title="Accessibility" description={`Accessibility statement for ${site.url.replace('https://', '')}: target level, what was tested, and how to report a problem.`}>
+  <section class="section">
+    <div class="container prose a11y">
+      <p class="eyebrow">Accessibility</p>
+      <h1>Accessibility statement</h1>
+      <p>
+        I want everyone to be able to read this site, whatever their device, browser or assistive
+        technology. This page says what it aims for, what has been checked, and how to tell me
+        when something gets in the way.
+      </p>
+
+      <h2>Target</h2>
+      <p>
+        The site aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility
+        Guidelines (WCAG) 2.2</a> at level <strong>AA</strong>. It is a small static site: two pages,
+        no forms, no video, no third-party widgets.
+      </p>
+
+      <h2>What has been checked</h2>
+      <ul>
+        <li>
+          <strong>Keyboard only.</strong> Every page can be used without a mouse: a "Skip to content"
+          link appears on the first Tab, focus is always visible, the theme button and the expandable
+          work history work with Enter and Space, and nothing traps focus.
+        </li>
+        <li>
+          <strong>Screen reader.</strong> Landmarks (header, navigation, main, footer), heading order,
+          link and button names, and the accessibility tree were reviewed with VoiceOver on macOS.
+          The animated line under my name is hidden from assistive technology and replaced by a static
+          list of the same words.
+        </li>
+        <li>
+          <strong>Colour contrast, light and dark theme.</strong> Every text colour was measured against
+          every background it sits on. All pairs are above 4.5:1; body text is above 12:1 in both themes.
+        </li>
+        <li>
+          <strong>Motion.</strong> When the operating system asks for reduced motion, animations and
+          hover movements are switched off and the typing effect stays still. Without JavaScript the
+          content is fully visible: the typing line shows its first word and the work history opens as
+          plain disclosure widgets.
+        </li>
+        <li>
+          <strong>Structure.</strong> One <code>h1</code> per page, sequential headings, semantic lists
+          and landmarks, a declared page language, and no information conveyed by colour alone (the current page in the navigation is underlined as well as coloured).
+        </li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>The short line under my name contains emoji; screen readers announce their names.</li>
+        <li>External links open in a new tab, which is stated by the browser rather than in the link text.</li>
+      </ul>
+
+      <h2>Tell me about a problem</h2>
+      <p>
+        If something on this site is hard to use, I would like to know. Reach me on{' '}
+        {contact.map((c, i) => (
+          <>
+            {i > 0 && ' or '}
+            <a href={c.url} target="_blank" rel="noopener">{c.label}</a>
+          </>
+        ))}
+        , and say which page and what you were trying to do. I will answer and fix what I can.
+      </p>
+
+      <p class="muted">Last reviewed on {lastReviewed}.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .a11y { max-width: 68ch; }
+  .a11y h2 { margin-top: 2rem; }
+</style>

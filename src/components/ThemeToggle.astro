@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 ---
 
-<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">
   <span class="icon-sun"><Icon name="sun" size={18} /></span>
   <span class="icon-moon"><Icon name="moon" size={18} /></span>
 </button>
@@ -19,9 +19,18 @@ import Icon from './Icon.astro';
 <script>
   const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
 
+  // The label names the action, not the state: "Switch to dark theme" while light is on.
+  const label = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  };
+
   btn.addEventListener('click', () => {
     const dark = document.documentElement.dataset.theme === 'dark';
     document.documentElement.dataset.theme = dark ? 'light' : 'dark';
     localStorage.setItem('theme', dark ? 'light' : 'dark');
+    label();
   });
+
+  label();
 </script>

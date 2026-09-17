@@ -2,6 +2,10 @@
 import Layout from '../components/Layout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import SideProjects from '../components/SideProjects.astro';
+import Education from '../components/Education.astro';
 import { site, withBase } from '../data/site';
 import { experience, skillGroups, jobTitle } from '../data/resume';
 
@@ -28,4 +32,11 @@ const personJsonLd = {
 <Layout title={undefined} jsonLd={personJsonLd}>
   <Hero />
   <About />
+  <!-- Paper only: printing the home page (⌘P / Save as PDF) gives the same résumé as /work. -->
+  <div class="print-only" aria-hidden="true">
+    <Experience />
+    <Skills />
+    <SideProjects />
+    <Education />
+  </div>
 </Layout>

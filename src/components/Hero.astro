@@ -1,5 +1,5 @@
 ---
-import { typingRoles } from '../data/resume';
+import { typingRoles, intro, jobTitle } from '../data/resume';
 import { site, withBase } from '../data/site';
 import SocialLinks from './SocialLinks.astro';
 
@@ -15,17 +15,18 @@ const lastName = nameParts.join(' ');
     <div>
       <p class="hero-greeting">Hello, I'm</p>
       <h1>{firstName} {lastName && <span class="accent">{lastName}</span>}</h1>
+      <p class="print-only hero-print-title">{jobTitle}</p>
       <p class="hero-typed">
-        <span class="typed" id="typed-roles" data-roles={rolesJson}>{typingRoles[0]}</span><span class="typed-cursor" aria-hidden="true">▍</span>
+        <span class="visually-hidden">{typingRoles.join(', ')}</span>
+        <span aria-hidden="true">
+          <span class="typed" id="typed-roles" data-roles={rolesJson}>{typingRoles[0]}</span><span class="typed-cursor">▍</span>
+        </span>
       </p>
 
-      <p class="hero-bio">
-        Close to eight years building careful, maintainable product interfaces: design systems,
-        reusable components, code review. At home in back-office and consumer-site rebuilds, in
-        TypeScript, Vue 3 / Nuxt and React. Available immediately.
-      </p>
+      <p class="hero-bio">{intro}</p>
 
       <SocialLinks />
+
     </div>
 
     <img class="hero-avatar" src={withBase('/img/avatar.jpg')} alt={`Portrait of ${site.author.name}`} width="220" height="220" />
