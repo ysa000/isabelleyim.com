@@ -24,3 +24,5 @@ pnpm-debug.log*
 
 # flag-on build produced by the test suite
 dist-travel/
+.vercel
+.env*

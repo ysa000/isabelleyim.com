@@ -3,7 +3,7 @@ import Layout from '../components/Layout.astro';
 import { site } from '../data/site';
 
 /** Date of the last review recorded on this page. Update it whenever the checks are redone. */
-const lastReviewed = '2026-09-17';
+const lastReviewed = '2026-10-28';
 const contact = [site.socials.linkedin, site.socials.github];
 ---
 
@@ -21,41 +21,47 @@ const contact = [site.socials.linkedin, site.socials.github];
       <h2>Target</h2>
       <p>
         The site aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility
-        Guidelines (WCAG) 2.2</a> at level <strong>AA</strong>. It is a small static site: two pages,
+        Guidelines (WCAG) 2.2</a> at level <strong>AA</strong>. It is a small static site: three pages,
         no forms, no video, no third-party widgets.
       </p>
 
-      <h2>What has been checked</h2>
+      <h2>What is in place</h2>
       <ul>
         <li>
-          <strong>Keyboard only.</strong> Every page can be used without a mouse: a "Skip to content"
-          link appears on the first Tab, focus is always visible, the theme button and the expandable
-          work history work with Enter and Space, and nothing traps focus.
+          <strong>Keyboard.</strong> Every page can be used without a mouse. A "Skip to content" link
+          appears on the first Tab and focus is always visible; both were checked in the browser. The
+          theme button and the expandable work history are native HTML buttons and disclosure widgets,
+          so they respond to Enter and Space, and nothing traps focus.
         </li>
         <li>
-          <strong>Screen reader.</strong> Landmarks (header, navigation, main, footer), heading order,
-          link and button names, and the accessibility tree were reviewed with VoiceOver on macOS.
-          The animated line under my name is hidden from assistive technology and replaced by a static
-          list of the same words.
+          <strong>Structure and names.</strong> Landmarks (header, navigation, main, footer), heading
+          order, and link and button names were reviewed in the browser's accessibility tree. Each page
+          has one <code>h1</code> and a declared language. The animated line under my name is hidden
+          from assistive technology and replaced by a static list of the same words.
         </li>
         <li>
-          <strong>Colour contrast, light and dark theme.</strong> Every text colour was measured against
-          every background it sits on. All pairs are above 4.5:1; body text is above 12:1 in both themes.
+          <strong>Colour contrast, light and dark theme.</strong> Every visible text element on every
+          page was measured against its actual background, in both themes. All pass the 4.5:1 minimum;
+          the lowest is 4.75:1 and body text is above 10:1.
+        </li>
+        <li>
+          <strong>Colour is never the only signal.</strong> For example, the current page in the
+          navigation is underlined as well as coloured.
         </li>
         <li>
           <strong>Motion.</strong> When the operating system asks for reduced motion, animations and
           hover movements are switched off and the typing effect stays still. Without JavaScript the
-          content is fully visible: the typing line shows its first word and the work history opens as
-          plain disclosure widgets.
-        </li>
-        <li>
-          <strong>Structure.</strong> One <code>h1</code> per page, sequential headings, semantic lists
-          and landmarks, a declared page language, and no information conveyed by colour alone (the current page in the navigation is underlined as well as coloured).
+          content stays fully visible: the typing line shows its first role and the work history works
+          as plain disclosure widgets.
         </li>
       </ul>
 
       <h2>Known limitations</h2>
       <ul>
+        <li>
+          The site has not yet been tested with a screen reader such as VoiceOver or NVDA. The review so
+          far used the browser's accessibility tree.
+        </li>
         <li>The short line under my name contains emoji; screen readers announce their names.</li>
         <li>External links open in a new tab, which is stated by the browser rather than in the link text.</li>
       </ul>

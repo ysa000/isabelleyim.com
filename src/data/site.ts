@@ -31,7 +31,7 @@ export const site = {
   shortTitle: 'isabelleyim',
   /** Default meta description for pages that don't set their own */
   description:
-    'Isabelle Yim — front-end developer with close to eight years of experience, building maintainable product interfaces in TypeScript, Vue 3 / Nuxt and React.',
+    'Isabelle Yim — front-end developer with nearly 8 years of experience, building polished, maintainable product interfaces with TypeScript, Vue 3 / Nuxt and React.',
   /** Production URL — no trailing slash. Used for canonical URLs, OG tags and the sitemap */
   url: 'https://isabelleyim.com',
   author: {

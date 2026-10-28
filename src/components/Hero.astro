@@ -18,8 +18,11 @@ const lastName = nameParts.join(' ');
       <p class="print-only hero-print-title">{jobTitle}</p>
       <p class="hero-typed">
         <span class="visually-hidden">{typingRoles.join(', ')}</span>
-        <span aria-hidden="true">
-          <span class="typed" id="typed-roles" data-roles={rolesJson}>{typingRoles[0]}</span><span class="typed-cursor">▍</span>
+        <span class="typed-stage" aria-hidden="true">
+          {/* Invisible copies of every role share one grid cell with the live line, so the
+              box is always as tall as the longest role at the current width: no layout shift. */}
+          {typingRoles.map((role) => <span class="typed-sizer">{role}▍</span>)}
+          <span class="typed-live"><span class="typed" id="typed-roles" data-roles={rolesJson}>{typingRoles[0]}</span><span class="typed-cursor">▍</span></span>
         </span>
       </p>
 
@@ -34,6 +37,18 @@ const lastName = nameParts.join(' ');
 </section>
 
 <script>
+  // Tighten the margin under the typing line only when its reserved space wraps to 2+ lines.
+  const typedLine = document.querySelector<HTMLElement>('.hero-typed');
+  const typedStage = typedLine?.querySelector<HTMLElement>('.typed-stage');
+  if (typedLine && typedStage && 'ResizeObserver' in window) {
+    const update = () => {
+      const lineHeight = parseFloat(getComputedStyle(typedLine).lineHeight);
+      typedLine.classList.toggle('is-multiline', typedStage.getBoundingClientRect().height > lineHeight * 1.5);
+    };
+    new ResizeObserver(update).observe(typedStage);
+    update();
+  }
+
   const el = document.getElementById('typed-roles');
   if (el) {
     const roles: string[] = JSON.parse(el.dataset.roles ?? '[]');

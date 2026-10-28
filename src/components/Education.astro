@@ -15,7 +15,6 @@ const when = (e: { start: string; end?: string }) => (e.end && e.end !== e.start
           <div class="card">
             <p class="muted" style="font-family: var(--font-mono); font-size: 0.8rem; margin: 0 0 0.4rem;">
               {when(e)}
-              {e.note && <> · {e.note}</>}
             </p>
             <h3>{e.degree}</h3>
             {e.field && <p style="margin: 0 0 0.2rem; font-weight: 600; color: var(--text-strong);">{e.field}</p>}

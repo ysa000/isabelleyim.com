@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'node-html-parser';
 import { site } from '../src/data/site';
-import { experience, earlierRoles, education, sideProjects, skillGroups, intro } from '../src/data/resume';
+import { experience, earlierRoles, education, sideProjects, skillGroups, intro, typingRoles } from '../src/data/resume';
 
 const root = new URL('..', import.meta.url).pathname;
 const dist = join(root, 'dist');
@@ -55,8 +55,10 @@ describe('home page', () => {
 
   it('shows the about section and the profile photo', () => {
     expect(doc.querySelector('img.hero-avatar')?.getAttribute('src')).toBe('/img/avatar.jpg');
-    expect(doc.querySelector('#about')).not.toBeNull();
-    expect(read(dist, 'index.html')).toContain('Ceetiz');
+    const about = doc.querySelector('#about');
+    expect(about).not.toBeNull();
+    expect(about?.querySelector('a[href="/work"]')).not.toBeNull();
+    expect(about?.querySelector(`a[href="${site.socials.linkedin.url}"]`)).not.toBeNull();
   });
 
   it('has a footer with the current year and icon-only social links', () => {
@@ -208,6 +210,11 @@ describe('accessibility', () => {
     const btn = home.querySelector('button#theme-toggle');
     expect(btn?.getAttribute('type')).toBe('button');
     expect(btn?.getAttribute('aria-label')).toMatch(/^Switch to (dark|light) theme$/);
+  });
+
+  it('reserves room for the longest hero role so the page never shifts while typing', () => {
+    const sizers = home.querySelectorAll('.typed-stage .typed-sizer').map((n) => n.text.replace('▍', ''));
+    expect(sizers).toEqual(typingRoles);
   });
 
   it('hides the animated hero line from assistive tech and provides a static alternative', () => {

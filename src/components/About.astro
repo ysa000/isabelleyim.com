@@ -1,11 +1,8 @@
 ---
-/**
- * Home-page bio. The career facts come from the CV (see resume.ts); the
- * personal paragraph keeps the wording of the previous isabelleyim.com.
- */
-import { experience } from '../data/resume';
+/** Home-page background: the human story the work page does not tell. */
+import { site, withBase } from '../data/site';
 
-const link = (company: string) => experience.find((e) => e.company === company)?.companyUrl;
+const linkedin = site.socials.linkedin;
 ---
 
 <section class="section" id="about">
@@ -15,21 +12,17 @@ const link = (company: string) => experience.find((e) => e.company === company)?
     <div class="prose about-text">
       <p>
         I came to front-end development from the project side. After a few years as a travel
-        consultant and then as a multimedia project manager in a web agency, I retrained as a
-        full-stack JavaScript developer in 2016 and have been building interfaces ever since: the
-        GrandVision optical brands' sites at{' '}
-        {link('Keyrus') ? <a href={link('Keyrus')}>Keyrus</a> : 'Keyrus'}, the listing page at{' '}
-        {link('SeLoger') ? <a href={link('SeLoger')}>SeLoger</a> : 'SeLoger'}, a publishing back-office at{' '}
-        {link('Adilibre') ? <a href={link('Adilibre')}>Adilibre</a> : 'Adilibre'}, and most recently the
-        back-office, B2C site and design system at{' '}
-        {link('Ceetiz') ? <a href={link('Ceetiz')}>Ceetiz</a> : 'Ceetiz'}.
+        consultant, I managed web projects in an agency, coordinating editorial, design and
+        development teams. In 2016 I retrained as a JavaScript developer, and I've been building
+        interfaces ever since. That first career still shapes how I work: I think about the people
+        who will use what I build. It's the same reason I'm taking the RGAA accessibility
+        certification: everyone should be able to use it.
       </p>
       <p>
-        Along the way I also brought some changes on a personal level. I needed to slow down 🧘🏻
-        and I wanted to make a difference ✊🏼, so I became vegan 🌱, quit smoking 🚭, took up knitting
-        🧶 and playing the guitar 🙉.
+        My full experience is on the <a href={withBase('/work')}>work page</a>. To talk about a
+        project or a role, the easiest way to reach me is on{' '}
+        <a href={linkedin.url} target="_blank" rel="noopener">{linkedin.label}</a>.
       </p>
-      <p>If you wish to know more, don't hesitate to connect with me — I'll be happy to chat.</p>
     </div>
   </div>
 </section>

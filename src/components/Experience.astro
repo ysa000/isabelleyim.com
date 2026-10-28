@@ -9,8 +9,8 @@ const formatDate = (e: Pick<Experience, 'start' | 'end' | 'current'>) => {
   return [e.start, end].filter(Boolean).join(' – ');
 };
 
-/** "Apr 2022 – 2026 · Paris": dates, then location, whichever are supplied. */
-const formatMeta = (e: Experience) => [formatDate(e), e.location].filter(Boolean).join(' · ');
+/** ["April 2022 – October 2026", "Paris"]: dates, then location, whichever are supplied. */
+const metaParts = (e: Experience) => [formatDate(e), e.location].filter((part): part is string => Boolean(part));
 
 const formatEarlier = (r: EarlierRole) => {
   const where = r.company ? `, ${r.company}` : '';
@@ -42,7 +42,18 @@ const formatEarlier = (r: EarlierRole) => {
                       )}
                     </span>
                   </span>
-                  {formatMeta(e) && <span class="timeline-date">{formatMeta(e)}</span>}
+                  {metaParts(e).length > 0 && (
+                    <span class="timeline-date">
+                      {/* "dates ·" and "location" each stay whole; the plain space between them is
+                          where a narrow screen wraps, so the dot never starts a line. */}
+                      {metaParts(e).map((part, i, parts) => (
+                        <>
+                          {i > 0 && ' '}
+                          <span>{part}{i < parts.length - 1 && '\u00a0·'}</span>
+                        </>
+                      ))}
+                    </span>
+                  )}
                 </span>
                 <span class="timeline-chevron" aria-hidden="true">▸</span>
               </summary>

@@ -1,11 +1,11 @@
 /**
  * Résumé data shown on /work and used for the hero and structured data.
  *
- * Source: Isabelle's CV (CV-Isabelle-Yim-contenu-FINAL.md, September 2026),
- * translated from French. Nothing is invented: where the CV leaves a value in
- * brackets (an end month, a course date, a project link) the field is left out
- * and the components skip it. Open items are marked `TODO(Isabelle)` and listed
- * in the content checklist in CLAUDE.md.
+ * Source: Isabelle's English résumé (resume_iyim_2026_EN.pdf, September 2026).
+ * Texts are copied as written there. Nothing is invented: values the résumé does
+ * not give (course dates, project links) are left out and the components skip
+ * them. Open items are marked `TODO(Isabelle)` and listed in the content
+ * checklist in CLAUDE.md.
  */
 
 export interface Experience {
@@ -35,8 +35,6 @@ export interface Education {
   /** A single year when `end` is omitted. */
   start: string;
   end?: string;
-  /** Short status shown next to the date, e.g. "planned". */
-  note?: string;
 }
 
 export interface SkillGroup {
@@ -56,147 +54,142 @@ export interface SideProject {
 /** Work history — newest first. Shown on /work. */
 export const experience: Experience[] = [
   {
-    role: 'Front-end developer',
+    role: 'Front-End Developer',
     company: 'Ceetiz',
     location: 'Paris',
-    start: 'Apr 2022',
-    // TODO(Isabelle): end month (the CV has "[mois] 2026").
-    end: '2026',
-    summary: 'Back-office and B2C site rebuild, a shared design system, and code review for the front-end team.',
+    start: 'April 2022',
+    end: 'October 2026',
     bullets: [
-      'Rebuilt the back-office and the B2C site: built the screens within a hexagonal architecture, implemented the designs and mapped the back-end data model onto the interface.',
-      'Designed and maintained the back-office design system: a library of responsive, reusable Vue 3 components shared across the internal applications.',
-      'Code review within the front-end team: reviewed merge requests for consistency with team conventions and the design system.',
-      'Continuous improvement of the B2C site in production: bug fixes and performance optimisations.',
+      'Delivered the redesign of the back-office and B2C website: built screens within a hexagonal architecture, turned mock-ups into UI, and mapped the back-end data model to the interface.',
+      'Designed and maintained the design system for the admin tools: a library of responsive, reusable Vue 3 components shared across internal applications.',
+      'Reviewed code for the front-end team: checked merge requests and kept work consistent with team conventions and the design system.',
+      'Continuously improved the live B2C site through bug fixes and performance optimisations.',
     ],
     badges: ['TypeScript', 'Vue 3 / Nuxt', 'Tailwind CSS', 'Hexagonal architecture', 'GitLab'],
   },
   {
-    role: 'Full-stack developer',
+    role: 'Full-Stack Developer',
     company: 'Adilibre',
     location: 'Paris',
-    start: 'Jul 2019',
-    end: 'Sep 2020',
-    summary: 'Publishing back-office: ePub3 compliance tooling and management screens, from wireframe to production.',
+    start: 'July 2019',
+    end: 'September 2020',
     bullets: [
-      'Built an internal npm module that checks ePub3 files for compliance (structure and metadata), integrated into the back-office: issues are now caught automatically on import, where previously they only surfaced after delivery, reported by client brands.',
-      'Designed the functional mockups, then built the detail and management screens (contacts, mailing lists, point-of-sale material): from wireframe to production.',
+      'Built an internal npm module for ePub3 compliance testing (structure and metadata), integrated into the back-office, so issues were caught automatically on import instead of surfacing after delivery when client brands reported them.',
+      'Designed functional mock-ups, then built the detail and management screens (contacts, mailing lists, point-of-sale materials), from wireframe to production.',
     ],
     badges: ['React', 'GraphQL', 'Node.js', 'Material UI', 'Figma', 'CodeCommit'],
   },
   {
-    role: 'Front-end developer',
+    role: 'Front-End Developer',
     company: 'SeLoger',
     location: 'Paris',
-    start: 'Feb 2018',
-    end: 'Jun 2019',
-    summary: 'Rebuild of the property listing page, A/B testing and SEO on one of the most visited pages of the site.',
+    start: 'February 2018',
+    end: 'June 2019',
     bullets: [
-      'Rebuilt the listing detail page, one of the most visited pages on the site: responsive, cross-browser React/Redux components.',
-      'Built A/B tests (Kameleoon) on the legacy version, so product decisions could be settled on real data.',
-      'SEO optimisation (metadata, semantic structure) and unit test coverage.',
+      'Delivered the redesign of the property listing page, one of the most visited pages on the site, with responsive, cross-browser React/Redux components.',
+      'Built A/B tests (Kameleoon) on the legacy version so product changes could be decided on real user data.',
+      'Improved SEO (metadata, semantic structure) and increased unit test coverage.',
     ],
     badges: ['React', 'Redux', 'styled-components', 'Jest', 'Kameleoon', 'Scrum'],
   },
   {
-    role: 'Front-end developer',
+    role: 'Front-End Developer',
     company: 'Keyrus',
     location: 'Levallois-Perret',
-    start: 'Apr 2017',
-    end: 'Dec 2017',
-    summary: 'Redesign of the GrandVision group sites: Grand Optical, Générale d’Optique and Apollo (Germany).',
+    start: 'April 2017',
+    end: 'December 2017',
     bullets: [
-      'Responsive, cross-browser integration from the designs, across three brands and two markets.',
-      'Harmonised the CSS across the group’s sites (Less, BEM) and fixed display bugs.',
+      'Built the front end for the redesign of GrandVision’s websites (Grand Optical, Générale d’Optique and Apollo in Germany), turning mock-ups into responsive, cross-browser pages across 3 brands and 2 markets.',
+      'Standardised CSS across the group’s sites (Less, BEM) and fixed display bugs.',
     ],
     badges: ['HTML5', 'CSS3', 'jQuery', 'Less', 'BEM'],
   },
   {
-    role: 'Multimedia project manager',
+    role: 'Digital Project Manager',
     company: 'BigYouth',
     location: 'Paris',
-    start: 'Jan 2015',
-    end: 'Jan 2016',
+    start: 'January 2015',
+    end: 'January 2016',
     summary:
-      'Managed web projects in an agency: scoping the need, coordinating the editorial, creative and technical teams, tracking schedule, budget and quality, and the client relationship.',
+      'Managed web projects at an agency: scoped client requirements, coordinated editorial, creative and technical teams, tracked schedule, budget and quality, and handled client relations.',
   },
 ];
 
-/** Roles outside the main timeline. Empty: the CV covers everything. */
+/** Roles outside the main timeline. Empty: the résumé covers everything. */
 export const earlierRoles: EarlierRole[] = [];
 
 export const education: Education[] = [
   {
-    degree: 'Developing accessible websites compliant with RGAA',
-    field: 'Certifying course',
+    degree: 'Building accessible, RGAA-compliant websites',
+    field: 'Certification in progress',
     school: 'Access42',
-    // TODO(Isabelle): confirm the dates and whether the course has started (the CV has "[2026]").
+    // TODO(Isabelle): course dates, if you want more than the year.
     start: '2026',
-    note: 'planned',
   },
   {
-    degree: 'Full-stack JavaScript developer',
-    field: 'Certified title, RNCP level 6',
+    degree: 'Full-Stack JavaScript Developer',
+    field: 'Certified qualification, RNCP Level 6, equivalent to a bachelor’s degree',
     school: 'Ifocop',
     start: '2016',
   },
   {
-    degree: 'Multimedia project manager',
+    degree: 'Multimedia Project Management',
     school: 'IESA Multimédia',
     start: '2014',
   },
 ];
 
 export const skillGroups: SkillGroup[] = [
-  { title: 'Languages', skills: ['TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'] },
+  { title: 'Code', skills: ['TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'] },
   {
     title: 'Frameworks & libraries',
     skills: ['Vue 3 / Nuxt', 'React', 'Tailwind CSS', 'styled-components', 'Material UI', 'GraphQL'],
   },
   {
     title: 'Practices',
-    skills: ['Design systems', 'Reusable components', 'Code review', 'Unit testing (Jest)', 'Hexagonal architecture'],
+    skills: ['design systems', 'reusable components', 'code review', 'unit testing (Jest)', 'hexagonal architecture'],
   },
   // TODO(Isabelle): add an "Accessibility" group (RGAA 4, WCAG 2.1 AA, semantic HTML, ARIA,
   // keyboard navigation, screen-reader testing) once the Access42 certification is obtained.
-  { title: 'Tools & methods', skills: ['Git (GitLab, GitHub)', 'GitLab CI', 'Figma', 'Scrum', 'JIRA'] },
-  { title: 'Spoken languages', skills: ['French (native)', 'English (professional, fluent)'] },
+  { title: 'Tools & methods', skills: ['Git (GitLab, GitHub)', 'GitLab CI', 'Figma', 'Scrum', 'Jira'] },
+  { title: 'Languages', skills: ['French — native', 'English — fluent, professional working proficiency'] },
 ];
 
 export const sideProjects: SideProject[] = [
   {
     name: 'Free Knit',
-    years: '2021 – 2022',
+    years: '2021–2022',
     stack: ['Remix', 'TypeScript', 'Tailwind CSS'],
     description:
-      'Turns a paper knitting pattern into a digital tracker: you move through a project by ticking off the steps you have completed.',
+      'Turns a paper knitting pattern into a digital tracker: you work through your project by ticking off each completed step.',
   },
   {
     name: 'Vegans Little Helper',
     years: '2021',
     stack: ['Next.js', 'Tailwind CSS'],
-    description: 'A product listing for identifying and flagging products that are vegan.',
+    description: 'A product listing that helps users identify vegan products and flag them.',
   },
   {
     name: 'Ghibli World',
     years: '2021',
     stack: ['Next.js', 'TypeScript', 'styled-components'],
-    description: 'A catalogue of Studio Ghibli films: a filterable list and a detail page for each film.',
+    description: 'A catalogue of Studio Ghibli films, with a filterable list and a detailed page for each film.',
   },
 ];
 
 /** Plain job title, used on /work, in meta descriptions and structured data. */
 export const jobTitle = 'Front-end developer';
 
-/** Short pitch from the CV, shown in the hero and at the top of /work (and so in the PDF).
- *  TODO(Isabelle): keep or drop "Available immediately". */
+/** Summary from the résumé, shown in the hero and at the top of /work (and so in the PDF).
+ *  Reworded in the first person, and without the leading job title that the pages already show just above it. */
 export const intro =
-  'Close to eight years building careful, maintainable product interfaces: design systems, reusable components, code review. At home in back-office and consumer-site rebuilds, in TypeScript, Vue 3 / Nuxt and React. Available immediately.';
+  'With nearly 8 years of experience, I build polished, maintainable product interfaces: design systems, reusable components, code review. I have redesigned back-offices and consumer-facing websites with TypeScript, Vue 3 / Nuxt and React. I am currently completing the RGAA accessibility certification to build accessible websites.';
 
 /** Lines typed out one character at a time in the hero. */
 export const typingRoles = [
   `${jobTitle} 💻`,
   'Knitter / Crocheter 🧶',
+  'Stargazer 🔭',
   'Plant-powered 🌱 / Friend of all animals 🐮',
   'Cat mom 😺',
 ];

@@ -1,0 +1,7 @@
+# Keep local-only files out of CLI deployments (Vercel builds from source).
+.env*
+.claude/
+.astro/
+dist/
+dist-travel/
+node_modules/

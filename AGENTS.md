@@ -39,23 +39,21 @@ hidden, and the open content questions.
 
 ## Content checklist (Isabelle to supply)
 
-Résumé content comes from `CV-Isabelle-Yim-contenu-FINAL.md` (September 2026), translated
-into English in `src/data/resume.ts`. Items the CV leaves in brackets are left out of the
-site rather than guessed; each is marked `TODO(Isabelle)` in the data files.
+Résumé texts come from Isabelle's English résumé (`resume_iyim_2026_EN.pdf`, September
+2026), copied as written into `src/data/resume.ts`. Values the résumé does not give are
+left out rather than guessed; each is marked `TODO(Isabelle)` in the data files.
 
-- [ ] End month of the Ceetiz role (site shows "Apr 2022 – 2026")
-- [ ] Access42 RGAA course: dates, and whether it has started (site shows "2026 · planned")
+- [ ] Access42 RGAA audit course (2026): exact dates, if more than the year is wanted
 - [ ] Accessibility skill group, to add once the certification is obtained
 - [ ] Links for the side projects (Free Knit, Vegans Little Helper, Ghibli World)
-- [ ] Keep "Available immediately" in the hero bio, or drop it
-- [ ] Review the English translation of the CV bullets
+- [ ] "Mâcon / Remote" and "Available immediately" are in the résumé header but not on the
+      site: publish them or not (`author.location` in `src/data/site.ts`)
 - [ ] Keep the X/Twitter link or drop it (`socials.x` in `src/data/site.ts`)
-- [ ] Public email on the site, yes/no (`author.email`; the CV's phone number is never published)
-- [ ] Location string for the footer and `/work` (`author.location`)
-- [ ] `/accessibility` says the site was reviewed with VoiceOver on macOS: run that pass
-      (⌘F5 in Safari, Tab/VO-arrows through both pages) and update the "Last reviewed" date
-      in `src/pages/accessibility.astro` before publishing
-- [x] Experience, education, skills and side projects ported from the CV
+- [ ] Public email on the site, yes/no (`author.email`; the résumé's phone number is never published)
+- [ ] Screen-reader pass: run VoiceOver on macOS (⌘F5 in Safari, Tab/VO-arrows through all
+      three pages), then move the screen-reader item out of "Known limitations" in
+      `src/pages/accessibility.astro` and update its "Last reviewed" date
+- [x] Experience, education, skills, side projects and summary from the English résumé
 - [x] Palette: old dark/nyanza/cerise colours applied as tokens in `src/styles/global.css`
 
 ## Docs
